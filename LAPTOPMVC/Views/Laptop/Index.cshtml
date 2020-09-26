@@ -1,0 +1,66 @@
+﻿@model IEnumerable<LAPTOPMVC.Models.Laptop>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Laptop List</h2>
+@Html.ActionLink("ADD", "Addmay", null, new { @class = "btn btn-info" })
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Price</td>
+            <td>CPU</td>
+            <td>RAM</td>
+            <td>Storage</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var lp in Model)
+        {
+            <tr>
+                <td>@lp.id</td>
+                <td>@lp.name</td>
+                <td>@lp.price</td>
+                <td>@lp.cpu</td>
+                <td>@lp.ram</td>
+                <td>@lp.storage</td>
+                <td>
+                    @Html.ActionLink("Edit", "Editmay", new { id = lp.id }, new { @class = "btn btn-info" })
+                    <a href="#" class="btn btn-danger btnXoa" data="@lp.id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('.btnXoa').click(function (e) {
+                e.preventDefault();
+                var atag = $(this);
+                var idmay = atag.attr('data');
+                if (!confirm("Are You Sure ???"))
+                    return;
+                $.ajax(
+                    {
+                        url: '/Laptop/Deletemay/' + idmay + "/",
+                        method: "post",
+                        success: function (data) {
+                            if (data.isvalid) {
+                                atag.closest('tr').remove();
+                                return;
+                            }
+                            alert(data.msg);
+                        },
+                        failed: function () {
+                        }
+
+                    }
+                );
+            });
+        });
+    </script>
+
+}

@@ -1,0 +1,57 @@
+﻿@model LAPTOPMVC.Models.Laptop
+
+@{
+    if (ViewBag.Loai == 1)
+    { ViewBag.Title = "Edit may"; }
+    else
+    { ViewBag.Title = "Add may"; }
+
+}
+
+<h2>Add/Edit </h2>
+@using (Html.BeginForm())
+{
+    <table class="table" style="width:auto">
+        <tr>
+            <td>ID:</td>
+            <td>
+                @*Not allowed to modified ID*@
+                @if (ViewBag.Loai == 1)
+                {
+                    @Html.HiddenFor(m => m.id)
+                    @Model.id
+                }
+                else
+                {
+                    @Html.TextBoxFor(m => m.id)
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>Name:</td>
+            <td>@Html.TextBoxFor(m => m.name)</td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td>@Html.TextBoxFor(m => m.price)</td>
+        </tr>
+        <tr>
+            <td>CPU:</td>
+            <td>@Html.TextBoxFor(m => m.cpu)</td>
+        </tr>
+        <tr>
+            <td>RAM:</td>
+            <td>@Html.TextBoxFor(m => m.ram)</td>
+        </tr>
+        <tr>
+            <td>Storage:</td>
+            <td>@Html.TextBoxFor(m => m.storage)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Save" />
+            </td>
+        </tr>
+    </table>
+}
